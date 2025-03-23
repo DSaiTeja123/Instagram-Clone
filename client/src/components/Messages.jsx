@@ -8,7 +8,7 @@ const Messages = ({ selectedUser }) => {
   useFetchMessages();
 
   const { messages } = useSelector((store) => store.chat);
-  const { user } = useSelector((store) => store.auth);
+  const { user, colorToggled } = useSelector((store) => store.auth);
 
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
@@ -17,22 +17,17 @@ const Messages = ({ selectedUser }) => {
   const handleScroll = () => {
     const container = messagesContainerRef.current;
     if (container.scrollTop === 0 && !loading) {
-      // If the user has scrolled to the top, load older messages
       setLoading(true);
       loadOlderMessages();
     }
   };
 
-  // Function to load older messages
   const loadOlderMessages = () => {
-    // Here, implement the logic to fetch older messages (e.g., through API or Redux action)
     setTimeout(() => {
-      // Simulate adding older messages
       setLoading(false);
     }, 1000);
   };
 
-  // Scroll to the bottom when new messages are received
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -41,29 +36,40 @@ const Messages = ({ selectedUser }) => {
 
   return (
     <div
-      className="overflow-y-auto flex-1 p-4"
+      className="overflow-y-auto flex-1 p-4 transition-colors duration-500"
       ref={messagesContainerRef}
       onScroll={handleScroll}
     >
       <div className="flex flex-col gap-3">
-        {messages && messages.map((message) => {
-          return (
-            <div key={message._id} className={`flex ${ message.senderId === user?._id ? 'justify-end' : 'justify-start' }`} >
-              <div className={`p-2 rounded-xl max-w-xs break-words ${ 
+        {messages?.map((message) => (
+          <div
+            key={message._id}
+            className={`flex ${
+              message.senderId === user?._id
+                ? 'justify-end'
+                : 'justify-start'
+            }`}
+          >
+            <div
+              className={`p-2 rounded-xl max-w-xs break-words transition-colors duration-500 ${
                 message.senderId === user?._id
-                ? 'rounded-tr-none bg-indigo-100 text-black'
-                : 'rounded-tl-none bg-blue-400 text-white'
-              }`} >
-                {message.message}
-              </div>
+                  ? colorToggled
+                    ? 'rounded-tr-none bg-gray-500 text-white'
+                    : 'rounded-tr-none bg-indigo-100 text-black'
+                  : colorToggled
+                  ? 'rounded-tl-none bg-gray-700 text-white'
+                  : 'rounded-tl-none bg-blue-400 text-white'
+              }`}
+            >
+              {message.message}
             </div>
-          )
-        })}
+          </div>
+        ))}
       </div>
       <div ref={messagesEndRef} />
-      {loading && <div>Loading older messages...</div>}
+      {loading && <div className="text-center mt-4">Loading older messages...</div>}
     </div>
-  )
-}
+  );
+};
 
 export default Messages;

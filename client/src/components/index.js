@@ -13,9 +13,10 @@ import Post from "./Post";
 import Posts from "./Posts";
 import Profile from "./Profile";
 import ProtectedRoutes from "./ProtectedRoutes";
-import RightSidebar from "./Sidebar";
+import Sidebar from "./Sidebar";
 import Signup from "./Signup";
 import SuggestedUsers from "./SuggestedUsers";
+import Toggle from "./Toggle";
 
 export {
   Chat,
@@ -33,7 +34,8 @@ export {
   Posts,
   Profile,
   ProtectedRoutes,
-  RightSidebar,
+  Sidebar,
   Signup,
-  SuggestedUsers
+  SuggestedUsers,
+  Toggle,
 }

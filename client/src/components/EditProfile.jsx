@@ -9,7 +9,6 @@ import { Loader2 } from 'lucide-react';
 import { setAuthUser } from '@/store/authSlice';
 
 function EditProfile() {
-
   const { user } = useSelector(store => store.auth);
   const imageRef = useRef();
   const [loading, setLoading] = useState(false);
@@ -21,13 +20,19 @@ function EditProfile() {
     gender: user?.gender
   });
 
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(prev => !prev);
+  };
+
   const changePhotoHandler = (e) => {
     const file = e.target.files?.[0];
-    if (file) setInput({...input, profilePhoto: file});
+    if (file) setInput({ ...input, profilePhoto: file });
   }
 
   const genderHandler = (value) => {
-    setInput({...input, gender: value});
+    setInput({ ...input, gender: value });
   }
 
   const editProfileHandler = async () => {
@@ -39,7 +44,7 @@ function EditProfile() {
 
     try {
       setLoading(true);
-      const res = await axios.post('http://localhost:8000/api/v2/user/profile/update', formData, { headers:{'Content-Type':'multipart/form-data'}, withCredentials:true });
+      const res = await axios.post('http://localhost:8000/api/v2/user/profile/update', formData, { headers: { 'Content-Type': 'multipart/form-data' }, withCredentials: true });
       if (res.data.success) {
         const updatedUser = {
           ...user,
@@ -60,10 +65,16 @@ function EditProfile() {
   }
 
   return (
-    <div className='flex max-w-2xl mx-auto pl-10'>
+    <div className={`flex max-w-2xl mx-auto pl-10 transition-all duration-300 ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
       <section className='flex flex-col gap-6 w-full my-8'>
-        <h1 className='font-bold text-xl'>Edit Profile</h1>
-        <div className='flex items-center justify-between bg-gray-100 rounded-xl p-4'>
+        <div className="flex justify-between items-center">
+          <h1 className='font-bold text-xl'>Edit Profile</h1>
+          <Button onClick={toggleDarkMode} className='bg-blue-500 hover:bg-blue-600 transition-all'>
+            {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+          </Button>
+        </div>
+
+        <div className={`flex items-center justify-between rounded-xl p-4 ${isDarkMode ? 'bg-gray-800' : 'bg-gray-100'}`}>
           <div className='flex items-center gap-3'>
             <Avatar>
               <AvatarImage src={user?.profilePicture} alt="post_image" />
@@ -71,20 +82,27 @@ function EditProfile() {
             </Avatar>
             <div>
               <h1 className='font-bold text-sm'>{user?.username}</h1>
-              <span className='text-gray-600'>{user?.bio || 'Bio here...'}</span>
+              <span className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>{user?.bio || 'Bio here...'}</span>
             </div>
           </div>
           <input ref={imageRef} onChange={changePhotoHandler} type='file' className='hidden' />
           <Button onClick={() => imageRef?.current.click()} className='bg-[#0095F6] h-8 hover:bg-[#318bc7]'>Change photo</Button>
         </div>
+
         <div>
           <h1 className='font-bold text-xl mb-2'>Bio</h1>
-          <Textarea value={input.bio} onChange={(e) => setInput({ ...input, bio: e.target.value })} name='bio' className="focus-visible:ring-transparent" />
+          <Textarea
+            value={input.bio}
+            onChange={(e) => setInput({ ...input, bio: e.target.value })}
+            name='bio'
+            className={`focus-visible:ring-transparent ${isDarkMode ? 'bg-gray-800 text-white' : ''}`}
+          />
         </div>
+
         <div>
           <h1 className='font-bold mb-2'>Gender</h1>
           <Select defaultValue={input.gender} onValueChange={genderHandler}>
-            <SelectTrigger className="w-full">
+            <SelectTrigger className={`w-full ${isDarkMode ? 'bg-gray-800 text-white' : ''}`}>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -95,6 +113,7 @@ function EditProfile() {
             </SelectContent>
           </Select>
         </div>
+
         <div className='flex justify-end'>
           {
             loading ? (

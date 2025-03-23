@@ -8,7 +8,6 @@ import { setOnlineUsers } from './store/chatSlice';
 import { setLikeNotification } from './store/notificationSlice';
 import { useEffect } from 'react';
 
-
 const browserRouter = createBrowserRouter([
   {
     path: '/',

@@ -12,6 +12,7 @@ const CommentDialog = ({open, setOpen}) => {
 
   const [text,setText] = useState("");
   const { selectedPost, posts } = useSelector(store => store.post);
+  const { colorToggled } = useSelector(store => store.auth);
   const [comment, setComment] = useState([]);
   const dispatch = useDispatch();
 

@@ -1,4 +1,4 @@
-import { setAuthUser } from '@/store/authSlice';
+import { setAuthUser, setColorToggled } from '@/store/authSlice';
 import { FaInstagram } from 'react-icons/fa';
 import { Avatar, AvatarFallback, AvatarImage, Popover, PopoverContent, PopoverTrigger, Button } from './ui';
 import axios from 'axios';
@@ -7,17 +7,17 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { CreatePost } from '.';
+import { CreatePost, Toggle } from '.';
 import { setPosts, setSelectedPost } from '@/store/postSlice';
 
 const LeftSidebar = () => {
   const navigate = useNavigate();
-  const { user } = useSelector((store) => store.auth);
-  const { likeNotification } = useSelector((store) => store.notification);
   const dispatch = useDispatch();
+  const { user, colorToggled } = useSelector((store) => store.auth);
+  const { likeNotification } = useSelector((store) => store.notification);
   const [open, setOpen] = useState(false);
   const [isMessagesOpen, setIsMessagesOpen] = useState(false);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false); // New state for collapsing sidebar
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   const logoutHandler = async () => {
     try {
@@ -34,6 +34,10 @@ const LeftSidebar = () => {
     }
   };
 
+  const handleToggle = () => {
+    dispatch(setColorToggled(!colorToggled));
+  };
+
   const sidebarHandler = (textType) => {
     if (textType === 'Logout') {
       logoutHandler();
@@ -44,7 +48,7 @@ const LeftSidebar = () => {
     } else if (textType === 'Home') {
       navigate('/');
     } else if (textType === 'Messages') {
-      setIsMessagesOpen(prevState => !prevState);
+      setIsMessagesOpen((prevState) => !prevState);
       navigate('/chat');
     }
   };
@@ -69,17 +73,22 @@ const LeftSidebar = () => {
   ];
 
   return (
-    <div className="fixed top-0 left-0 z-10 w-16 md:w-1/5 h-screen">
+    <div
+      className={`fixed top-0 left-0 z-10 w-16 md:w-1/5 h-screen transition-colors duration-500 ${
+        colorToggled ? 'text-white' : 'text-black'
+      }`}
+    >
       <div className="flex flex-col">
         <div className="flex items-center gap-3">
           <div
-            className="text-3xl bg-gradient-to-r bg-clip-text text-[#833AB4] hover:text-[#E1306C] transition-all duration-300 pl-6 py-6 cursor-pointer"
-            onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)} // Toggle collapse on click
+            className="text-3xl bg-gradient-to-r bg-clip-text text-[#833AB4] hover:text-[#E1306C] transition-all duration-500 pl-6 py-6 cursor-pointer"
+            onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
           >
             <FaInstagram className="block" />
           </div>
+
           {!isSidebarCollapsed && !isMessagesOpen && (
-            <h1 className="hidden md:block my-8 pl-3 text-4xl bg-gradient-to-r from-[#405DE6] via-[#833AB4] to-[#E1306C] bg-clip-text text-transparent font-oleo-script font-medium">
+            <h1 className="hidden md:block my-8 pb-2 text-4xl bg-gradient-to-r from-[#405DE6] via-[#833AB4] to-[#E1306C] bg-clip-text text-transparent font-extrabold drop-shadow-lg">
               Instagram
             </h1>
           )}
@@ -87,13 +96,25 @@ const LeftSidebar = () => {
 
         <div className="space-y-4 pl-4 md:pl-6">
           {sidebar.map((item, index) => (
-            <div onClick={() => sidebarHandler(item.text)} key={index} className="flex items-center gap-3 relative group cursor-pointer rounded-lg p-2 my-3 transition-all duration-300">
-              <div className="text-2xl text-[#333] group-hover:text-[#833AB4] transition-colors duration-300">
+            <div
+              onClick={() => sidebarHandler(item.text)}
+              key={index}
+              className={`flex items-center gap-3 relative group cursor-pointer rounded-lg p-2 my-3 transition-all duration-300`}
+            >
+              <div
+                className={`text-2xl ${
+                  colorToggled ? 'text-gray-300' : 'text-[#333]'
+                } group-hover:text-[#833AB4] transition-colors duration-300`}
+              >
                 {item.icon}
               </div>
 
               {!isSidebarCollapsed && !isMessagesOpen && (
-                <span className="hidden md:inline-block text-xl bg-gradient-to-r from-[#405DE6] via-[#833AB4] to-[#E1306C] bg-clip-text font-oleo-script text-transparent group-hover:text-lg transition-all duration-500">
+                <span
+                  className={`hidden md:inline-block text-xl bg-clip-text font-oleo-script transition-all duration-500 ${
+                    colorToggled ? 'text-white' : 'text-black'
+                  } group-hover:text-lg`}
+                >
                   {item.text}
                 </span>
               )}
@@ -131,6 +152,9 @@ const LeftSidebar = () => {
               )}
             </div>
           ))}
+        </div>
+        <div onClick={handleToggle}>
+          <Toggle />
         </div>
       </div>
       <CreatePost open={open} setOpen={setOpen} />

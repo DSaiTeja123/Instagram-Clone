@@ -1,13 +1,16 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import { LeftSidebar } from '.'
+import { useSelector } from 'react-redux'
 
 function MainLayout() {
+  const { colorToggled } = useSelector((store) => store.auth);
+
   return (
-    <div>
+    <div className={`flex transition-colors duration-500 ${colorToggled ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
       <LeftSidebar />
-      <div>
-        <Outlet></Outlet>
+      <div className="flex-grow">
+        <Outlet />
       </div>
     </div>
   )
