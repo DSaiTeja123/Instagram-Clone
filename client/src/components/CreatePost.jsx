@@ -34,7 +34,7 @@ const CreatePost = ({ open, setOpen }) => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.post('http://localhost:8000/api/v2/post/createPost', data, {
+      const res = await axios.post('https://instagram-clone-eptf.onrender.com/api/v2/post/createPost', data, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },

@@ -17,7 +17,7 @@ function Chat() {
 
   const sendMessageHandler = async (receiverId) => {
     try {
-      const res = await axios.post(`http://localhost:8000/api/v2/message/send/${receiverId}`, { textMessage }, {
+      const res = await axios.post(`https://instagram-clone-eptf.onrender.com/api/v2/message/send/${receiverId}`, { textMessage }, {
         headers: { 'Content-Type': 'application/json' }, withCredentials: true
       });
       if (res.data?.success) {

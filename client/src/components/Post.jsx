@@ -37,7 +37,7 @@
         const isFollowing = user.following.includes(post.author._id);
     
         const res = await axios.post(
-          `http://localhost:8000/api/v2/user/follow/${post.author._id}`, {}, { withCredentials: true }
+          `https://instagram-clone-eptf.onrender.com/api/v2/user/follow/${post.author._id}`, {}, { withCredentials: true }
         );
     
         if (res.data.success) {
@@ -78,7 +78,7 @@
     const likeHandler = async () => {
       try {
         const action = Liked ? 'dislike' : 'like';
-        const res = await axios.get(`http://localhost:8000/api/v2/post/${post?._id}/${action}`, {withCredentials: true});
+        const res = await axios.get(`https://instagram-clone-eptf.onrender.com/api/v2/post/${post?._id}/${action}`, {withCredentials: true});
         if (res.data.message) {
           const updatedLikes = Liked ? postLike - 1 : postLike + 1;
           setPostLike(updatedLikes);
@@ -98,7 +98,7 @@
 
     const deletePostHandler = async () => {
       try {
-        const res = await axios.delete(`http://localhost:8000/api/v2/post/delete/${post?._id}`, {withCredentials:true});
+        const res = await axios.delete(`https://instagram-clone-eptf.onrender.com/api/v2/post/delete/${post?._id}`, {withCredentials:true});
         if (res.data.success) {
           const updatedPosts = posts.filter((postItem) => postItem?._id !== post?._id);
           dispatch(setPosts(updatedPosts));
@@ -111,7 +111,7 @@
 
     const commentHandler = async () => {
       try {
-        const res = await axios.post(`http://localhost:8000/api/v2/post/${post?._id}/comment`, {text}, 
+        const res = await axios.post(`https://instagram-clone-eptf.onrender.com/api/v2/post/${post?._id}/comment`, {text}, 
         {headers: { 'Content-Type': 'application/json' }, withCredentials: true});
         if (res.data.success) {
           const updatedComment = [res.data.comment, ...comment];
@@ -130,7 +130,7 @@
 
     const bookmarkHandler = async () => {
       try {
-        const res = await axios.get(`http://localhost:8000/api/v2/post/${post?._id}/bookmark`, { withCredentials:true });
+        const res = await axios.get(`https://instagram-clone-eptf.onrender.com/api/v2/post/${post?._id}/bookmark`, { withCredentials:true });
         if (res.data?.success)
           setBookmarked(!Bookmarked);
           toast.success(res.data?.message);

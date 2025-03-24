@@ -44,7 +44,7 @@ function EditProfile() {
 
     try {
       setLoading(true);
-      const res = await axios.post('http://localhost:8000/api/v2/user/profile/update', formData, { headers: { 'Content-Type': 'multipart/form-data' }, withCredentials: true });
+      const res = await axios.post('https://instagram-clone-eptf.onrender.com/api/v2/user/profile/update', formData, { headers: { 'Content-Type': 'multipart/form-data' }, withCredentials: true });
       if (res.data.success) {
         const updatedUser = {
           ...user,
