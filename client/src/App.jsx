@@ -44,7 +44,7 @@ function App() {
 
   useEffect(() => {
     if (user) {
-      const socketio = io('http://https://instagram-clone-eptf.onrender.com',{
+      const socketio = io('https://instagram-clone-eptf.onrender.com',{
         query: {
           userId: user?._id
         }, transports: ['websocket']
