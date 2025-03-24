@@ -16,18 +16,18 @@ import {
 
 const router = express.Router();
 
-router.post("/createPost", isAuthenticated, upload.single("image"), createPost);
-router.get("/fetchAllPosts", isAuthenticated, fetchAllPosts);
-router.get("/user/all", isAuthenticated, fetchPostsByUser);
+router.post("/https://instagram-clone-eptf.onrender.com/createPost", isAuthenticated, upload.single("image"), createPost);
+router.get("/https://instagram-clone-eptf.onrender.com/fetchAllPosts", isAuthenticated, fetchAllPosts);
+router.get("/https://instagram-clone-eptf.onrender.com/user/all", isAuthenticated, fetchPostsByUser);
 
-router.get("/:id/like", isAuthenticated, likePost);
-router.get("/:id/dislike", isAuthenticated, dislikePost);
-router.get("/:id/bookmark", isAuthenticated, addPostToBookmarks);
+router.get("/https://instagram-clone-eptf.onrender.com/:id/like", isAuthenticated, likePost);
+router.get("/https://instagram-clone-eptf.onrender.com/:id/dislike", isAuthenticated, dislikePost);
+router.get("/https://instagram-clone-eptf.onrender.com/:id/bookmark", isAuthenticated, addPostToBookmarks);
 
-router.post("/:id/comment", isAuthenticated, createComment);
-router.post("/:id/comment/all", isAuthenticated, fetchCommentsByPost);
-router.delete("/:id/comment/:commentId", isAuthenticated, deleteComment);
+router.post("/https://instagram-clone-eptf.onrender.com/:id/comment", isAuthenticated, createComment);
+router.post("/https://instagram-clone-eptf.onrender.com/:id/comment/all", isAuthenticated, fetchCommentsByPost);
+router.delete("/https://instagram-clone-eptf.onrender.com/:id/comment/:commentId", isAuthenticated, deleteComment);
 
-router.delete("/delete/:id", isAuthenticated, deletePost);
+router.delete("/https://instagram-clone-eptf.onrender.com/delete/:id", isAuthenticated, deletePost);
 
 export default router;
