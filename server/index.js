@@ -7,10 +7,8 @@ import router from "./routes/user.route.js";
 import postRoute from "./routes/post.route.js";
 import messageRoute from "./routes/message.route.js";
 import { app, server } from "./socket/socket.js";
-import path from "path";
 
 dotenv.config();
-const __dirname = path.resolve();
 
 const PORT = process.env.PORT;
 
@@ -27,17 +25,9 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-// ✅ Serve API routes
 app.use("/api/v2/user", router);
 app.use("/api/v2/post", postRoute);
 app.use("/api/v2/message", messageRoute);
-
-// ✅ Serve frontend (client) build files
-app.use(express.static(path.join(__dirname, "../client/build")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
-});
 
 server.listen(PORT, () => {
   connectDB();
