@@ -19,7 +19,8 @@ app.use(urlencoded({ extended: true }));
 const corsOptions = {
   origin: [
     "https://instagram-clone-blond-two.vercel.app",
-    "http://instagram-clone-blond-two.vercel.app"
+    "http://instagram-clone-blond-two.vercel.app",
+    "https://instagram-clone-eptf.onrender.com"
   ],
   credentials: true
 };
