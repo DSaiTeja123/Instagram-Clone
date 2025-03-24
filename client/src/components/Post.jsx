@@ -14,7 +14,7 @@
     const [text, setText] = useState("");
     const [open, setOpen] = useState(false);
     const [imageOpen, setImageOpen] = useState(false);
-    const { user } = useSelector(store => store.auth);
+    const { user, colorToggled } = useSelector(store => store.auth);
     const { posts } = useSelector(store => store.post);
     const [ Liked, setLiked ] = useState(post.likes.includes(user?._id) || false);
     const [ Bookmarked, setBookmarked ] = useState(false);

@@ -8,9 +8,8 @@ import { Comment } from '.'
 import axios from 'axios'
 import { setPosts } from '@/store/postSlice'
 
-const CommentDialog = ({open, setOpen}) => {
-
-  const [text,setText] = useState("");
+const CommentDialog = ({ open, setOpen }) => {
+  const [text, setText] = useState('');
   const { selectedPost, posts } = useSelector(store => store.post);
   const { colorToggled } = useSelector(store => store.auth);
   const [comment, setComment] = useState([]);
@@ -24,18 +23,16 @@ const CommentDialog = ({open, setOpen}) => {
 
   const changeEventHandler = (e) => {
     const text = e.target.value;
-    if (text.trim()) {
-      setText(text);
-    } else {
-      setText("");
-    }
-  }
+    setText(text.trim() ? text : '');
+  };
 
   const sendMessageHandler = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`http://localhost:8000/api/v2/post/${selectedPost?._id}/comment`, {text}, 
-      {headers: { 'Content-Type': 'application/json' }, withCredentials: true});
+      const res = await axios.post(`http://localhost:8000/api/v2/post/${selectedPost?._id}/comment`, { text }, {
+        headers: { 'Content-Type': 'application/json' }, withCredentials: true
+      });
+
       if (res.data.success) {
         const updatedComment = [res.data.comment, ...comment];
         setComment(updatedComment);
@@ -43,23 +40,24 @@ const CommentDialog = ({open, setOpen}) => {
         const updatedPosts = posts.map(p =>
           p._id === selectedPost._id ? { ...p, comments: updatedComment } : p
         );
+
         dispatch(setPosts(updatedPosts));
-        setText("");
+        setText('');
         toast.success(res.data.message);
       }
     } catch (error) {
       toast.error(error.response.data.message);
     }
-  }
-  
+  };
+
   return (
     <div>
       <Dialog open={open}>
-        <DialogContent onInteractOutside={() => setOpen(false)} className="max-w-5xl p-0 flex flex-col bg-white shadow-lg rounded-lg">
+        <DialogContent onInteractOutside={() => setOpen(false)} className={`max-w-5xl p-0 flex flex-col shadow-lg rounded-lg `}>
           <div className="flex w-full">
             <div className="w-1/2">
               <img
-                className="w- h-full object-cover rounded-l-lg"
+                className="w-full h-full object-cover rounded-l-lg"
                 src={selectedPost?.image}
                 alt="post_img"
               />
@@ -71,16 +69,16 @@ const CommentDialog = ({open, setOpen}) => {
                     <AvatarImage src={selectedPost?.author?.profilePicture} />
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
-                  <div>
-                    <p className="font-semibold text-sm text-gray-800">{selectedPost?.author?.username}</p>
-                    <span className="text-gray-500 text-xs">{selectedPost?.author?.bio || "Bio"}</span>
+                  <div className={`${colorToggled ? 'text-white' : 'text-black'}`}>
+                    <p className="font-semibold text-sm">{selectedPost?.author?.username}</p>
+                    <span className="text-xs">{selectedPost?.author?.bio || "Bio"}</span>
                   </div>
                 </Link>
                 <Dialog>
                   <DialogTrigger asChild>
                     <MoreHorizontal className="cursor-pointer text-gray-500 hover:text-gray-800" />
                   </DialogTrigger>
-                  <DialogContent className="flex flex-col items-center text-sm text-center bg-gray-50 p-2 rounded-lg shadow">
+                  <DialogContent className={`flex flex-col items-center text-sm text-center p-2 rounded-lg shadow ${colorToggled ? 'bg-gray-800 text-white' : 'bg-gray-50 text-black'}`}>
                     <div className="cursor-pointer w-full text-[#ED4956] font-bold hover:bg-red-100 py-1 rounded">Unfollow</div>
                     <div className="cursor-pointer w-full hover:bg-gray-100 py-1 rounded">Add to Fav</div>
                   </DialogContent>
@@ -99,14 +97,16 @@ const CommentDialog = ({open, setOpen}) => {
                     value={text}
                     onChange={changeEventHandler}
                     placeholder="Add a Comment"
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    className={`w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:outline-none ${colorToggled ? 'border-gray-600 bg-black text-white focus:ring-blue-500' : 'border-gray-300 bg-white text-black focus:ring-blue-500'}`}
                   />
                   <Button
                     disabled={!text.trim()}
                     onClick={sendMessageHandler}
                     variant="outline"
                     className={`px-4 py-2 text-sm font-medium rounded-md ${
-                      !text.trim() ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-blue-500 text-white hover:bg-blue-600"
+                      !text.trim()
+                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                        : `${colorToggled ? 'bg-gray-900 text-white hover:bg-blue-600' : 'text-white hover:bg-blue-600 bg-blue-500'}`
                     }`}
                   >
                     Send
@@ -118,7 +118,7 @@ const CommentDialog = ({open, setOpen}) => {
         </DialogContent>
       </Dialog>
     </div>
-  )
-}
+  );
+};
 
-export default CommentDialog
+export default CommentDialog;
