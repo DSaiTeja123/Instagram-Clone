@@ -3,7 +3,6 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { SuggestedUsers } from '.';
-import { setColorToggled } from '@/store/authSlice';
 
 const Sidebar = () => {
   const dispatch = useDispatch();

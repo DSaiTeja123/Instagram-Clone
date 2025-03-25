@@ -10,7 +10,7 @@ import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { setAuthUser } from '@/store/authSlice';
 
-const Signup = () => {
+const Login = () => {
   const [input, setInput] = useState({
     email: "",
     password: ""
@@ -113,4 +113,4 @@ const Signup = () => {
   );  
 }
 
-export default Signup
+export default Login
