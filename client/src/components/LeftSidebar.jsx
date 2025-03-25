@@ -155,15 +155,15 @@ const LeftSidebar = () => {
           ))}
         </div>
         
-        <div className="">
-          <Link to={`/signin`}>
-            <Button className="bg-gradient-to-r from-blue-400 to-purple-600 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg transition-transform duration-300 transform hover:scale-105">
+        <div>
+          <Link to="/signin">
+            <Button className="bg-gradient-to-r from-blue-400 to-purple-600 text-white font-semibold px-6 py-3 rounded-lg transition-transform duration-300 transform hover:scale-105">
               Sign In
             </Button>
           </Link>
         </div>
 
-        <div onClick={handleToggle}>
+        <div className='fixed left-10' onClick={handleToggle}>
           <Toggle />
         </div>
       </div>

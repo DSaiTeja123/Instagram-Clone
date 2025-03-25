@@ -140,8 +140,8 @@
     }
 
     return (
-      <div className='my-8 w-full max-w-2xl mx-auto'>
-        <div className='bg-white rounded-lg p-4'>
+      <div className={`my-8 w-full max-w-2xl mx-auto ${colorToggled ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+        <div className={`rounded-lg p-4 ${colorToggled ? 'bg-gray-800' : 'bg-white'}`}>
           <div className='flex items-center justify-between gap-4'>
             <div className='flex items-center gap-4'>
               <Avatar>
@@ -158,7 +158,7 @@
               <DialogTrigger asChild>
                 <MoreHorizontal className='cursor-pointer text-gray-600 hover:text-gray-900' />
               </DialogTrigger>
-              <DialogContent className="flex flex-col items-center text-sm text-center bg-white rounded-lg p-4">
+              <DialogContent className={`flex flex-col items-center text-sm text-center rounded-lg p-4 ${colorToggled ? 'bg-gray-800' : 'bg-white'}`}>
                 {post.author._id !== user._id && (
                   user.following.includes(post.author._id) ? (
                     <Button onClick={followUnfollowHandler} variant='ghost' className="w-full py-2">Follow/Unfollow</Button>
@@ -188,47 +188,48 @@
               />
             </DialogContent>
           </Dialog>
-    
+
           <div className='flex items-center justify-between mt-4'>
             <div className='flex items-center gap-5'>
-              {Liked ? <FaHeart onClick={likeHandler} size={24} className='cursor-pointer text-red-600' /> : <FaRegHeart onClick={likeHandler} size={24} className='cursor-pointer text-gray-600 hover:text-red-500' />}
-              <MessageCircle onClick={() => { dispatch(setSelectedPost(post)); setOpen(true); }} className='cursor-pointer text-gray-600 hover:text-gray-800' />
-              <Send className='cursor-pointer text-gray-600 hover:text-gray-800' />
+              {Liked ? <FaHeart onClick={likeHandler} size={24} className='cursor-pointer text-red-600' /> : <FaRegHeart onClick={likeHandler} size={24} className={`cursor-pointer ${colorToggled ? 'text-gray-400 hover:text-red-500' : 'text-gray-600 hover:text-red-500'}`} />}
+              <MessageCircle onClick={() => { dispatch(setSelectedPost(post)); setOpen(true); }} className={`cursor-pointer ${colorToggled ? 'text-gray-400 hover:text-gray-200' : 'text-gray-600 hover:text-gray-800'}`} />
+              <Send className={`cursor-pointer ${colorToggled ? 'text-gray-400 hover:text-gray-200' : 'text-gray-600 hover:text-gray-800'}`} />
             </div>
             {Bookmarked ? (
-              <BookMarked onClick={bookmarkHandler} size={24} className='cursor-pointer text-gray-600' />
+              <BookMarked onClick={bookmarkHandler} size={24} className={`cursor-pointer ${colorToggled ? 'text-gray-400' : 'text-gray-600'}`} />
             ) : (
-              <Bookmark onClick={bookmarkHandler} size={24} className='cursor-pointer text-gray-600 hover:text-gray-800' />
+              <Bookmark onClick={bookmarkHandler} size={24} className={`cursor-pointer ${colorToggled ? 'text-gray-400 hover:text-gray-200' : 'text-gray-600 hover:text-gray-800'}`} />
             )}
           </div>
-    
-          <span className='text-gray-600 font-medium'>{postLike} likes</span>
-          <p className='text-gray-700 mt-2'>
+
+          <span className={`font-medium ${colorToggled ? 'text-gray-400' : 'text-gray-600'}`}>{postLike} likes</span>
+          <p className={`mt-2 ${colorToggled ? 'text-gray-300' : 'text-gray-700'}`}>
             <span className='font-semibold'>{post?.author?.username}</span> {post.caption}
           </p>
-    
+
           {updatedPost && updatedPost.comments?.length > 0 && (
             <span
               onClick={() => { dispatch(setSelectedPost(post)); setOpen(true); }}
-              className='text-sm text-gray-400 cursor-pointer hover:text-gray-500'>
+              className={`text-sm cursor-pointer hover:text-gray-500 ${colorToggled ? 'text-gray-400' : 'text-gray-600'}`}>
               View all {updatedPost.comments.length} comments
             </span>
           )}
-    
+
           <CommentDialog open={open} setOpen={setOpen} />
-    
+
           <div className='flex items-center justify-between mt-4'>
             <Input
               type="text"
               value={text}
               onChange={changeEventHandler}
               placeholder='Add a comment'
-              className="outline-none text-sm w-full py-2 px-3 border rounded-lg focus:ring-2 focus:ring-indigo-500"
+              className={`outline-none text-sm w-full py-2 px-3 border rounded-lg focus:ring-2 ${colorToggled ? 'bg-gray-700 text-white focus:ring-blue-500' : 'focus:ring-indigo-500'}`}
             />
-            {text && <span onClick={commentHandler} className='text-indigo-600 cursor-pointer'>Post</span>}
+            {text && <span onClick={commentHandler} className={`cursor-pointer ${colorToggled ? 'text-blue-400' : 'text-indigo-600'}`}>Post</span>}
           </div>
         </div>
       </div>
+
     )  
   }
 

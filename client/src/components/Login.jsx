@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
+import React, { useEffect, useState } from 'react'
+import { Button } from './ui/button'
+import { Input } from './ui/input'
 import { Label } from './ui/label';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,47 +11,51 @@ import { toast } from 'sonner';
 import { setAuthUser } from '@/store/authSlice';
 
 const Login = () => {
-  const [input, setInput] = useState({ email: '', password: '' });
+  const [input, setInput] = useState({
+    email: "",
+    password: ""
+  });
+
   const [loading, setLoading] = useState(false);
-  const { user } = useSelector((store) => store.auth);
+  const { user } = useSelector(store=>store.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
-  };
+  }
 
   const signupHandler = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.post(
-        'https://instagram-clone-eptf.onrender.com/api/v2/user/signin',
-        input,
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        }
-      );
-
-      if (res.data.success) {
+      const res = await axios.post('https://instagram-clone-eptf.onrender.com/api/v2/user/signin', input, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials:true
+      });
+      if(res.data.success) {
         dispatch(setAuthUser(res.data.user));
         navigate('/');
-        toast.success(res.data?.message || 'Login successful!');
-        setInput({ email: '', password: '' });
+        toast.success(res.data?.message || "Login successful!");
+        setInput({
+          email: "",
+          password: ""
+        })
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || 'An unexpected error occurred');
+      toast.error(error.response?.data?.message || "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   useEffect(() => {
-    if (user) {
-      navigate('/');
+    if (!user) {
+      navigate('/signin');
     }
-  }, [user, navigate]);
+  }, [])
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-[#405DE6] via-[#833AB4] to-[#E1306C] p-6">
@@ -71,7 +75,6 @@ const Login = () => {
             name="email"
             value={input.email}
             onChange={changeEventHandler}
-            required
             className="focus:ring-2 focus:ring-blue-500 focus:outline-none my-2 border border-gray-300 rounded-md p-3 w-full transition duration-200 ease-in-out transform hover:shadow-lg"
           />
         </div>
@@ -82,7 +85,6 @@ const Login = () => {
             name="password"
             value={input.password}
             onChange={changeEventHandler}
-            required
             className="focus:ring-2 focus:ring-blue-500 focus:outline-none my-2 border border-gray-300 rounded-md p-3 w-full transition duration-200 ease-in-out transform hover:shadow-lg"
           />
         </div>
@@ -106,7 +108,7 @@ const Login = () => {
         </div>
       </form>
     </div>
-  );
-};
+  );  
+}
 
-export default Login;
+export default Login
