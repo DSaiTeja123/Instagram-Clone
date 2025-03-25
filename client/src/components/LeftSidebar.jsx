@@ -155,7 +155,7 @@ const LeftSidebar = () => {
           ))}
         </div>
         
-          <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+          <div className="rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
             <Link to={`/signin`}>
               <Button className="bg-gradient-to-r from-blue-400 to-purple-600 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg transition-transform duration-300 transform hover:scale-105">
                 Sign In

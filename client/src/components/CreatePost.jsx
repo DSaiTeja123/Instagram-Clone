@@ -26,23 +26,36 @@ const CreatePost = ({ open, setOpen }) => {
       setImagePreview(dataUrl);
     }
   };
-
+  
   const createPostHandler = async (e) => {
+    e.preventDefault();
+    
+    if (!user?.token) {
+      toast.error("Unauthorized: No token found");
+      return;
+    }
+  
     const data = new FormData();
     data.append("caption", caption);
     if (imagePreview) data.append("image", file);
-    e.preventDefault();
+  
     try {
       setLoading(true);
-      const res = await axios.post('https://instagram-clone-eptf.onrender.com/api/v2/post/createPost', data, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        withCredentials: true
-      });
+      const res = await axios.post(
+        'https://instagram-clone-eptf.onrender.com/api/v2/post/createPost',
+        data,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${user.token}` // Add token here
+          },
+          withCredentials: true
+        }
+      );
+  
       if (res.data.success) {
         dispatch(setPosts([res.data.post, ...posts]));
-        toast.success(res?.data?.message || "No data received");
+        toast.success(res?.data?.message || "Post created successfully");
         setOpen(false);
         setFile("");
         setCaption("");
@@ -54,7 +67,7 @@ const CreatePost = ({ open, setOpen }) => {
     } finally {
       setLoading(false);
     }
-  };
+  };  
 
   const toggleImagePreview = () => {
     setImagePreview((prev) => (prev ? "" : imagePreview));
