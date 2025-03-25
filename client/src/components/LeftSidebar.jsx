@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Heart, Home, LogOut, MessageCircle, PlusSquare, Search, TrendingUp } from 'lucide-react';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { CreatePost, Toggle } from '.';
 import { setPosts, setSelectedPost } from '@/store/postSlice';
@@ -151,8 +151,20 @@ const LeftSidebar = () => {
                 </Popover>
               )}
             </div>
+            
           ))}
         </div>
+        
+        <div className="flex justify-center items-center h-screen bg-gradient-to-r from-blue-400 to-purple-600">
+          <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+            <Link to={`/signin`}>
+              <Button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg transition-transform duration-300 transform hover:scale-105">
+                Sign In
+              </Button>
+            </Link>
+          </div>
+        </div>
+
         <div onClick={handleToggle}>
           <Toggle />
         </div>
