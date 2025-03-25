@@ -27,7 +27,6 @@ const Signup = () => {
 
   const signupHandler = async (e) => {
     e.preventDefault();
-    console.log(input);
     try {
       setLoading(true);
       const res = await axios.post('https://instagram-clone-eptf.onrender.com/api/v2/user/signup', input, {
