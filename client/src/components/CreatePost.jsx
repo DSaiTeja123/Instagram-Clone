@@ -26,7 +26,7 @@ const CreatePost = ({ open, setOpen }) => {
       setImagePreview(dataUrl);
     }
   };
-  
+
   const createPostHandler = async (e) => {
     e.preventDefault();
     
@@ -42,7 +42,7 @@ const CreatePost = ({ open, setOpen }) => {
     try {
       setLoading(true);
       const res = await axios.post(
-        'https://instagram-clone-eptf.onrender.com/api/v2/post/createPost',
+        "https://instagram-clone-eptf.onrender.com/api/v2/post/createPost",
         data,
         {
           headers: {
