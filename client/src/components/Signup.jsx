@@ -30,7 +30,7 @@ const Signup = () => {
     console.log(input);
     try {
       setLoading(true);
-      const res = await axios.post('https://instagram-clone-eptf.onrender.com/signup', input, {
+      const res = await axios.post('https://instagram-clone-eptf.onrender.com/api/v2/user/signup', input, {
         headers: {
           'Content-Type': 'application/json',
         },
