@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import useFetchMessages from "@/hooks/useFetchMessages";
-import useFetchNotification from "@/hooks/useFetchNotification";
+import { useFetchMessages, useFetchNotification } from '../../hooks/index'
 
 const Messages = ({ selectedUser }) => {
   useFetchNotification();

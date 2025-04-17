@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setColorToggled } from '../store/authSlice';
+import { setColorToggled } from '../../store/authSlice';
 
 const Toggle = () => {
   const dispatch = useDispatch();

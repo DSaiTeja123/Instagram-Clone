@@ -1,5 +1,5 @@
 import React from 'react'
-import { Avatar, AvatarImage, AvatarFallback } from './ui'
+import { Avatar, AvatarImage, AvatarFallback } from '../ui/index'
 import { useSelector } from 'react-redux'
 
 function Comment({ comment }) {

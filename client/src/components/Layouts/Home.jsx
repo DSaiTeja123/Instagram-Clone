@@ -1,8 +1,7 @@
 import React from 'react';
-import { Feed, Sidebar } from '.';
+import { Feed, Sidebar } from '../index';
 import { Outlet } from 'react-router-dom';
-import useFetchAllPosts from '@/hooks/useFetchAllPosts';
-import useFetchSuggestedUsers from '@/hooks/useFetchSuggestedUsers';
+import { useFetchAllPosts, useFetchSuggestedUsers } from '../../hooks/index';
 import { useSelector } from 'react-redux';
 
 function Home() {

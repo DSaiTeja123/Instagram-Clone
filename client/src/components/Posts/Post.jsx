@@ -1,8 +1,8 @@
   import React, { useState } from 'react'
-  import { Avatar, AvatarFallback, AvatarImage, Dialog, DialogContent, DialogTrigger, Button, Label, Input, Badge } from './ui'
+  import { Avatar, AvatarFallback, AvatarImage, Dialog, DialogContent, DialogTrigger, Button, Label, Input, Badge } from '../ui/index'
   import { Bookmark, MessageCircle, MoreHorizontal, Send, BookMarked } from 'lucide-react'
   import { FaHeart, FaRegHeart } from 'react-icons/fa'
-  import { CommentDialog } from '.'
+  import { CommentDialog } from '../index'
   import { useDispatch, useSelector } from 'react-redux'
   import { toast } from 'sonner'
   import { setPosts, setSelectedPost } from '@/store/postSlice'
@@ -23,6 +23,8 @@
     const dispatch = useDispatch();
     const updatedPost = posts.find(p => p._id === post._id);
 
+    const baseURL = import.meta.env.VITE_SERVER_URL;
+
     const changeEventHandler = (e) => {
       const text = e.target.value;
       if (text.trim()) {
@@ -37,7 +39,7 @@
         const isFollowing = (user?.following || []).includes(post?.author?._id);
     
         const res = await axios.post(
-          `http://localhost:8000/api/v2/user/follow/${post.author._id}`, {}, { withCredentials: true }
+          `${baseURL}/api/v2/user/follow/${post.author._id}`, {}, { withCredentials: true }
         );
     
         if (res.data.success) {
@@ -46,8 +48,8 @@
           const updatedPosts = posts.map((p) => {
             if (p._id === post._id) {
               const updatedFollowers = isFollowing
-                ? (p.author.followers || []).filter((id) => id !== user._id) // Fallback to an empty array if undefined
-                : [...(p.author.followers || []), user._id]; // Append the current user's ID
+                ? (p.author.followers || []).filter((id) => id !== user._id)
+                : [...(p.author.followers || []), user._id];
     
               return {
                 ...p,
@@ -78,7 +80,7 @@
     const likeHandler = async () => {
       try {
         const action = Liked ? 'dislike' : 'like';
-        const res = await axios.get(`http://localhost:8000/api/v2/post/${post?._id}/${action}`, {withCredentials: true});
+        const res = await axios.get(`${baseURL}/api/v2/post/${post?._id}/${action}`, {withCredentials: true});
         if (res.data.message) {
           const updatedLikes = Liked ? postLike - 1 : postLike + 1;
           setPostLike(updatedLikes);
@@ -98,7 +100,7 @@
 
     const deletePostHandler = async () => {
       try {
-        const res = await axios.delete(`http://localhost:8000/api/v2/post/delete/${post?._id}`, {withCredentials:true});
+        const res = await axios.delete(`${baseURL}/api/v2/post/delete/${post?._id}`, {withCredentials:true});
         if (res.data.success) {
           const updatedPosts = posts.filter((postItem) => postItem?._id !== post?._id);
           dispatch(setPosts(updatedPosts));
@@ -111,7 +113,7 @@
 
     const commentHandler = async () => {
       try {
-        const res = await axios.post(`http://localhost:8000/api/v2/post/${post?._id}/comment`, {text}, 
+        const res = await axios.post(`${baseURL}/api/v2/post/${post?._id}/comment`, {text}, 
         {headers: { 'Content-Type': 'application/json' }, withCredentials: true});
         if (res.data.success) {
           const updatedComment = [res.data.comment, ...comment];
@@ -130,7 +132,7 @@
 
     const bookmarkHandler = async () => {
       try {
-        const res = await axios.get(`http://localhost:8000/api/v2/post/${post?._id}/bookmark`, { withCredentials:true });
+        const res = await axios.get(`${baseURL}/api/v2/post/${post?._id}/bookmark`, { withCredentials:true });
         if (res.data?.success) {
           setBookmarked(!Bookmarked);
           toast.success(res.data?.message);

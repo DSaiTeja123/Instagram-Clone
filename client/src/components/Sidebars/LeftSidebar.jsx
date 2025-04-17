@@ -8,7 +8,7 @@ import {
   PopoverContent,
   PopoverTrigger,
   Button,
-} from "./ui";
+} from "../ui/index";
 import axios from "axios";
 import {
   Heart,
@@ -23,7 +23,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "sonner";
-import { CreatePost, Toggle } from ".";
+import { CreatePost, Toggle } from "../index";
 import { setPosts, setSelectedPost } from "@/store/postSlice";
 
 const LeftSidebar = () => {
@@ -36,6 +36,8 @@ const LeftSidebar = () => {
   const [open, setOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
+  const baseURL = import.meta.env.VITE_SERVER_URL;
+
   useEffect(() => {
     if (location.pathname === "/chat") {
       setIsSidebarCollapsed(true);
@@ -46,7 +48,7 @@ const LeftSidebar = () => {
 
   const logoutHandler = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/v2/user/logout", {
+      const res = await axios.get(`${baseURL}/api/v2/user/logout`, {
         withCredentials: true,
       });
       if (res.data.success) {

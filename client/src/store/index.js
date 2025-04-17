@@ -7,7 +7,7 @@ const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false, // important: avoid errors for storing socket
+      serializableCheck: false,
     }),
 });
 

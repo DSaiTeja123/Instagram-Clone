@@ -8,10 +8,12 @@ const useFetchMessages = () => {
   const dispatch = useDispatch();
   const { selectedUser } = useSelector(store => store.auth);
 
+  const baseURL = import.meta.env.VITE_SERVER_URL;
+
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const res = await axios.get(`http://localhost:8000/api/v2/message/receive/${selectedUser?._id}`, { withCredentials: true });
+        const res = await axios.get(`${baseURL}/api/v2/message/receive/${selectedUser?._id}`, { withCredentials: true });
         if (res?.data?.success) {
           dispatch(setMessages(res?.data?.messages));
         }

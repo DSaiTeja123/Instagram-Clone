@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Avatar, AvatarFallback, AvatarImage } from './ui';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/index';
 import { useSelector } from 'react-redux';
 
 function SuggestedUsers() {

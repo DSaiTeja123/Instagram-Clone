@@ -2,9 +2,11 @@ import { io } from 'socket.io-client';
 
 let socket;
 
+const baseURL = import.meta.env.VITE_SERVER_URL;
+
 export const initiateSocket = (userId) => {
   if (!socket || !socket.connected) {
-    socket = io("http://localhost:8000", {
+    socket = io(`${baseURL}`, {
       query: { userId },
       transports: ['websocket'],
       withCredentials: true,

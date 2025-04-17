@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage, Badge, Button } from "./ui";
+import { Avatar, AvatarFallback, AvatarImage, Badge, Button } from "../ui/index";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import useFetchProfile from "@/hooks/useFetchProfile";
+import { useFetchProfile } from "../../hooks/index";
 import { useSelector, useDispatch } from "react-redux";
 import { AtSign, Heart, MessageCircle } from "lucide-react";
 import { setUserProfile } from "@/store/authSlice";
-import { CommentDialog } from ".";
+import { CommentDialog } from "../index";
 
 const Profile = () => {
   const params = useParams();
@@ -73,7 +73,9 @@ const Profile = () => {
             <div className="flex flex-col gap-5">
               <div className="flex items-center gap-2">
                 <span
-                  className={`transition-all duration-500 ${colorToggled ? "text-white" : "text-black"}`}
+                  className={`transition-all duration-500 ${
+                    colorToggled ? "text-white" : "text-black"
+                  }`}
                 >
                   {userProfile?.username}
                 </span>
@@ -144,19 +146,31 @@ const Profile = () => {
               </div>
 
               <div className="flex items-center gap-4">
-                <p className={`transition-all duration-500 ${colorToggled ? "text-white" : "text-black"}`}>
+                <p
+                  className={`transition-all duration-500 ${
+                    colorToggled ? "text-white" : "text-black"
+                  }`}
+                >
                   <span className="font-semibold">
                     {userProfile?.posts.length}{" "}
                   </span>
                   posts
                 </p>
-                <p className={`transition-all duration-500 ${colorToggled ? "text-white" : "text-black"}`}>
+                <p
+                  className={`transition-all duration-500 ${
+                    colorToggled ? "text-white" : "text-black"
+                  }`}
+                >
                   <span className="font-semibold">
                     {userProfile?.followers.length}{" "}
                   </span>
                   followers
                 </p>
-                <p className={`transition-all duration-500 ${colorToggled ? "text-white" : "text-black"}`}>
+                <p
+                  className={`transition-all duration-500 ${
+                    colorToggled ? "text-white" : "text-black"
+                  }`}
+                >
                   <span className="font-semibold">
                     {userProfile?.following.length}{" "}
                   </span>
@@ -236,7 +250,6 @@ const Profile = () => {
         </div>
       </div>
 
-      {/* Comment Dialog */}
       {selectedPost && (
         <CommentDialog
           open={isDialogOpen}

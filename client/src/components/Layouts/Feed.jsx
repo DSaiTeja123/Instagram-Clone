@@ -1,5 +1,5 @@
 import React from 'react'
-import { Posts } from '.'
+import { Posts } from '../index'
 import { useSelector } from 'react-redux'
 
 function Feed() {

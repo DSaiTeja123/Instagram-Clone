@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Dialog, DialogContent, DialogTrigger, Avatar, AvatarFallback, AvatarImage, Input, Button, Toaster } from './ui'
+import { Dialog, DialogContent, DialogTrigger, Avatar, AvatarFallback, AvatarImage, Input, Button, Toaster } from '../ui/index'
 import { Link } from 'react-router-dom'
 import { MoreHorizontal } from 'lucide-react'
 import { toast } from 'sonner'
 import { useDispatch, useSelector } from 'react-redux'
-import { Comment } from '.'
+import { Comment } from '../index'
 import axios from 'axios'
 import { setPosts } from '@/store/postSlice'
 
@@ -14,6 +14,8 @@ const CommentDialog = ({ open, setOpen }) => {
   const { colorToggled } = useSelector(store => store.auth);
   const [comment, setComment] = useState([]);
   const dispatch = useDispatch();
+
+  const baseURL = import.meta.env.VITE_SERVER_URL;
 
   useEffect(() => {
     if (selectedPost) {
@@ -29,7 +31,7 @@ const CommentDialog = ({ open, setOpen }) => {
   const sendMessageHandler = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`http://localhost:8000/api/v2/post/${selectedPost?._id}/comment`, { text }, {
+      const res = await axios.post(`${baseURL}/api/v2/post/${selectedPost?._id}/comment`, { text }, {
         headers: { 'Content-Type': 'application/json' }, withCredentials: true
       });
 

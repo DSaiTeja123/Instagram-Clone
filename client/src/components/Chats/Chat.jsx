@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Avatar, AvatarFallback, AvatarImage, Input, Button } from "./ui";
+import { Avatar, AvatarFallback, AvatarImage, Input, Button } from "../ui/index";
 import { MessageCircleCode } from "lucide-react";
 import { Link } from "react-router-dom";
 import { setSelectedUser } from "@/store/authSlice";
 import axios from "axios";
 import { setMessages } from "@/store/chatSlice";
-import Messages from "./Messages";
+import { Messages } from "../index";
 import { toast } from "sonner";
 
 function Chat() {
@@ -19,10 +19,12 @@ function Chat() {
 
   const dispatch = useDispatch();
 
+  const baseURL = import.meta.env.VITE_SERVER_URL;
+
   const sendMessageHandler = async (receiverId) => {
     try {
       const res = await axios.post(
-        `http://localhost:8000/api/v2/messages/send/${receiverId}`,
+        `${baseURL}/api/v2/messages/send/${receiverId}`,
         { textMessage },
         {
           headers: { "Content-Type": "application/json" },
@@ -49,7 +51,6 @@ function Chat() {
 
   return (
     <div className="flex flex-col md:flex-row pl-20 h-screen overflow-hidden p-4 transition-colors duration-500">
-
       <section
         className={`w-full md:w-1/4 my-4 md:my-6 rounded-xl transition-colors duration-500
         ${colorToggled ? "bg-gray-900 text-white" : "bg-white"}

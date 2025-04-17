@@ -1,14 +1,18 @@
 import React, { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Avatar, AvatarFallback, AvatarImage, Button, Textarea } from "./ui";
 import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Button,
+  Textarea,
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/index";
+} from "../ui/index";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "sonner";
@@ -21,6 +25,9 @@ function EditProfile() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const baseURL = import.meta.env.VITE_SERVER_URL;
+
   const [input, setInput] = useState({
     profilePhoto: user?.profilePicture,
     bio: user?.bio,
@@ -45,7 +52,7 @@ function EditProfile() {
     try {
       setLoading(true);
       const res = await axios.post(
-        "http://localhost:8000/api/v2/user/profile/update",
+        `${baseURL}/api/v2/user/profile/update`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
