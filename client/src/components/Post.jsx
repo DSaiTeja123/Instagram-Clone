@@ -11,13 +11,13 @@
 
   const Post = ({ post }) => {
 
-    const [text, setText] = useState("");
-    const [open, setOpen] = useState(false);
-    const [imageOpen, setImageOpen] = useState(false);
+    const [ text, setText ] = useState("");
+    const [ open, setOpen ] = useState(false);
+    const [ imageOpen, setImageOpen ] = useState(false);
     const { user, colorToggled } = useSelector(store => store.auth);
     const { posts } = useSelector(store => store.post);
-    const [ Liked, setLiked ] = useState(post.likes.includes(user?._id) || false);
-    const [ Bookmarked, setBookmarked ] = useState(false);
+    const [ Liked, setLiked ] = useState((post?.likes || []).includes(user?._id) || false);
+    const [ Bookmarked, setBookmarked ] = useState(user?.bookmarks?.includes(post._id) || false);
     const [ postLike, setPostLike ] = useState(post.likes.length);
     const [ comment, setComment ] = useState(post.comments);
     const dispatch = useDispatch();
@@ -25,19 +25,19 @@
 
     const changeEventHandler = (e) => {
       const text = e.target.value;
-      if (text.trim) {
+      if (text.trim()) {
         setText(text);
       } else {
         setText("");
-      }
+      }      
     }
 
     const followUnfollowHandler = async () => {
       try {
-        const isFollowing = user.following.includes(post.author._id);
+        const isFollowing = (user?.following || []).includes(post?.author?._id);
     
         const res = await axios.post(
-          `https://instagram-clone-eptf.onrender.com/api/v2/user/follow/${post.author._id}`, {}, { withCredentials: true }
+          `http://localhost:8000/api/v2/user/follow/${post.author._id}`, {}, { withCredentials: true }
         );
     
         if (res.data.success) {
@@ -78,7 +78,7 @@
     const likeHandler = async () => {
       try {
         const action = Liked ? 'dislike' : 'like';
-        const res = await axios.get(`https://instagram-clone-eptf.onrender.com/api/v2/post/${post?._id}/${action}`, {withCredentials: true});
+        const res = await axios.get(`http://localhost:8000/api/v2/post/${post?._id}/${action}`, {withCredentials: true});
         if (res.data.message) {
           const updatedLikes = Liked ? postLike - 1 : postLike + 1;
           setPostLike(updatedLikes);
@@ -98,7 +98,7 @@
 
     const deletePostHandler = async () => {
       try {
-        const res = await axios.delete(`https://instagram-clone-eptf.onrender.com/api/v2/post/delete/${post?._id}`, {withCredentials:true});
+        const res = await axios.delete(`http://localhost:8000/api/v2/post/delete/${post?._id}`, {withCredentials:true});
         if (res.data.success) {
           const updatedPosts = posts.filter((postItem) => postItem?._id !== post?._id);
           dispatch(setPosts(updatedPosts));
@@ -111,7 +111,7 @@
 
     const commentHandler = async () => {
       try {
-        const res = await axios.post(`https://instagram-clone-eptf.onrender.com/api/v2/post/${post?._id}/comment`, {text}, 
+        const res = await axios.post(`http://localhost:8000/api/v2/post/${post?._id}/comment`, {text}, 
         {headers: { 'Content-Type': 'application/json' }, withCredentials: true});
         if (res.data.success) {
           const updatedComment = [res.data.comment, ...comment];
@@ -130,18 +130,19 @@
 
     const bookmarkHandler = async () => {
       try {
-        const res = await axios.get(`https://instagram-clone-eptf.onrender.com/api/v2/post/${post?._id}/bookmark`, { withCredentials:true });
-        if (res.data?.success)
+        const res = await axios.get(`http://localhost:8000/api/v2/post/${post?._id}/bookmark`, { withCredentials:true });
+        if (res.data?.success) {
           setBookmarked(!Bookmarked);
           toast.success(res.data?.message);
+        }              
       } catch (error) {
         toast.error(error.response?.data?.message);
       }
     }
 
     return (
-      <div className={`my-8 w-full max-w-2xl mx-auto ${colorToggled ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-        <div className={`rounded-lg p-4 ${colorToggled ? 'bg-gray-800' : 'bg-white'}`}>
+      <div className={`my-8 w-full max-w-2xl mx-auto duration-500 ${colorToggled ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+        <div className={`rounded-lg transition-colors duration-500 p-4 ${colorToggled ? 'bg-gray-900' : 'bg-white'}`}>
           <div className='flex items-center justify-between gap-4'>
             <div className='flex items-center gap-4'>
               <Avatar>
@@ -159,12 +160,10 @@
                 <MoreHorizontal className='cursor-pointer text-gray-600 hover:text-gray-900' />
               </DialogTrigger>
               <DialogContent className={`flex flex-col items-center text-sm text-center rounded-lg p-4 ${colorToggled ? 'bg-gray-800' : 'bg-white'}`}>
-                {post.author._id !== user._id && (
-                  user.following.includes(post.author._id) ? (
-                    <Button onClick={followUnfollowHandler} variant='ghost' className="w-full py-2">Follow/Unfollow</Button>
-                  ) : (
-                    <Button onClick={followUnfollowHandler} variant='ghost' className="w-full py-2">Follow/Unfollow</Button>
-                  )
+                {post.author._id !== user?._id && (
+                  <Button onClick={followUnfollowHandler} variant='ghost' className="w-full py-2">
+                    {/* {user.following.includes(post.author._id) ? "Unfollow" : "Follow"} */}
+                  </Button>
                 )}
                 <Button variant='ghost' className="w-full py-2">Add to Fav</Button>
                 {user && user?._id === post?.author._id && <Button onClick={deletePostHandler} variant='ghost' className="w-full py-2">Delete</Button>}
@@ -225,7 +224,11 @@
               placeholder='Add a comment'
               className={`outline-none text-sm w-full py-2 px-3 border rounded-lg focus:ring-2 ${colorToggled ? 'bg-gray-700 text-white focus:ring-blue-500' : 'focus:ring-indigo-500'}`}
             />
-            {text && <span onClick={commentHandler} className={`cursor-pointer ${colorToggled ? 'text-blue-400' : 'text-indigo-600'}`}>Post</span>}
+            { text.trim() && (
+              <span onClick={commentHandler} className={`ml-2 cursor-pointer ${colorToggled ? 'text-blue-400' : 'text-indigo-600'}`}>
+                Post
+              </span>
+            )}
           </div>
         </div>
       </div>

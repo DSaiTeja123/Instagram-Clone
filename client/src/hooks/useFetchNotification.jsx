@@ -16,7 +16,7 @@ const useFetchNotification = () => {
     return () => {
       socket?.off('newMessage');
     }
-  }, [ messages, setMessages ]);
+  }, [ socket, messages, setMessages, dispatch ]);
 };
 
 export default useFetchNotification;

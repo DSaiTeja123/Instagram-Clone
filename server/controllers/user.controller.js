@@ -10,7 +10,6 @@ export const registerController = async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
-    // Validate input fields
     if (!username || !email || !password) {
       return res.status(401).json({
         message: "All the fields must be filled !!!",
@@ -18,7 +17,6 @@ export const registerController = async (req, res) => {
       });
     }
 
-    // Check if the user already exists
     const user = await User.findOne({ email });
     if (user) {
       return res.status(401).json({
@@ -27,10 +25,8 @@ export const registerController = async (req, res) => {
       });
     }
 
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 15);
 
-    // Create a new user
     await User.create({
       username,
       email,
@@ -51,7 +47,6 @@ export const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Validate input fields
     if (!email || !password) {
       return res.status(401).json({
         message: "All the fields must be filled !!!",
@@ -59,7 +54,6 @@ export const loginController = async (req, res) => {
       });
     }
 
-    // Find the user by email
     const user = await User.findOne({ email });
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({
@@ -68,14 +62,12 @@ export const loginController = async (req, res) => {
       });
     }
 
-    // Generate JWT token
     const token = await jwt.sign(
       { userId: user._id },
       process.env.SECRET_KEY,
       { expiresIn: '1d' }
     );
 
-    // Populate user's posts
     const populatedPosts = await Promise.all(
       user.posts.map(async (postId) => {
         const post = await Post.findById(postId);
@@ -85,7 +77,6 @@ export const loginController = async (req, res) => {
       })
     );
 
-    // Create a new user object to return
     const responseUser = {
       _id: user._id,
       username: user.username,
@@ -94,10 +85,9 @@ export const loginController = async (req, res) => {
       bio: user.bio,
       followers: user.followers,
       following: user.following,
-      posts: populatedPosts.filter((post) => post !== null), // Remove null posts
+      posts: populatedPosts.filter((post) => post !== null),
     };
 
-    // Send response with token and user data
     return res
       .cookie('token', token, { httpOnly: true, sameSite: 'strict', maxAge: 24 * 60 * 60 * 1000 })
       .json({

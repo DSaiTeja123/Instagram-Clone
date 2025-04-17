@@ -5,7 +5,7 @@ import { receiveMessage, sendMessage } from "../controllers/message.controller.j
 
 const router = express.Router();
 
-router.post("/https://instagram-clone-eptf.onrender.com/send/:id", isAuthenticated, sendMessage);
-router.get("/https://instagram-clone-eptf.onrender.com/receive/:id", isAuthenticated, receiveMessage);
+router.post("/send/:id", isAuthenticated, sendMessage);
+router.get("/receive/:id", isAuthenticated, receiveMessage);
 
 export default router;

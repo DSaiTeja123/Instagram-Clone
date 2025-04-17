@@ -1,79 +1,106 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import './App.css'
-import { Chat, Home, Login, Signup, Profile, EditProfile, MainLayout, ProtectedRoutes } from './components';
-import { io, Socket } from "socket.io-client";
-import { useSelector, useDispatch } from 'react-redux';
-import { setSocket } from './store/socketSlice';
-import { setOnlineUsers } from './store/chatSlice';
-import { setLikeNotification } from './store/notificationSlice';
-import { useEffect } from 'react';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./App.css";
+import {
+  Chat,
+  Home,
+  Login,
+  Signup,
+  Profile,
+  EditProfile,
+  MainLayout,
+  ProtectedRoutes,
+} from "./components";
+
+import { useSelector, useDispatch } from "react-redux";
+import { setSocket } from "./store/socketSlice";
+import { setOnlineUsers } from "./store/chatSlice";
+import { setLikeNotification } from "./store/notificationSlice";
+import { initiateSocket, closeSocket } from "./socket/socket";
+import { useEffect } from "react";
 
 const browserRouter = createBrowserRouter([
   {
-    path: '/',
-    element: <ProtectedRoutes> <MainLayout /> </ProtectedRoutes>,
+    path: "/",
+    element: (
+      <ProtectedRoutes>
+        {" "}
+        <MainLayout />{" "}
+      </ProtectedRoutes>
+    ),
     children: [
       {
-        path: '/',
-        element: <ProtectedRoutes> <Home /> </ProtectedRoutes>
-      }, {
-        path: '/profile/:id',
-        element: <ProtectedRoutes> <Profile /> </ProtectedRoutes>
-      }, {
-        path: '/profile/update',
-        element: <ProtectedRoutes> <EditProfile /> </ProtectedRoutes>
-      }, {
-        path: '/chat',
-        element: <ProtectedRoutes> <Chat /> </ProtectedRoutes>
-      }
-    ]
-  }, {
-    path: '/signup',
-    element: <Signup />
-  }, {
-    path: '/signin',
-    element: <Login />
-  }
-])
+        path: "/",
+        element: (
+          <ProtectedRoutes>
+            {" "}
+            <Home />{" "}
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: "/profile/:id",
+        element: (
+          <ProtectedRoutes>
+            {" "}
+            <Profile />{" "}
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: "/profile/update",
+        element: (
+          <ProtectedRoutes>
+            {" "}
+            <EditProfile />{" "}
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: "/chat",
+        element: (
+          <ProtectedRoutes>
+            {" "}
+            <Chat />{" "}
+          </ProtectedRoutes>
+        ),
+      },
+    ],
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+  },
+  {
+    path: "/signin",
+    element: <Login />,
+  },
+]);
 
 function App() {
-
-  const { user } = useSelector(store => store.auth);
-  const { socket } = useSelector(store => store.socketio);
+  const { user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (user) {
-      const socketio = io('https://instagram-clone-eptf.onrender.com',{
-        query: {
-          userId: user?._id
-        }, transports: ['websocket']
-      });
+      const socketio = initiateSocket(user?._id);
       dispatch(setSocket(socketio));
 
-      socketio.on('getOnlineUsers', (onlineUsers) => {
+      socketio.on("getOnlineUsers", (onlineUsers) => {
         dispatch(setOnlineUsers(onlineUsers));
       });
-      
-      socketio.on('notification', (notification) => {
+
+      socketio.on("notification", (notification) => {
         dispatch(setLikeNotification(notification));
       });
 
       return () => {
-        socketio.close();
+        closeSocket();
         dispatch(setSocket(null));
-      }
-    } else if (socket) {
-      socket.close();
-      dispatch(setSocket(null));
+      };
     }
-  }, [user, dispatch])
+  }, [user, dispatch]);
 
-  return (
-    <>
-      <RouterProvider router={browserRouter} />
-    </>
-  )
+  return <RouterProvider router={browserRouter} />;
 }
 
-export default App
+export default App;

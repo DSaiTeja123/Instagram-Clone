@@ -18,9 +18,8 @@ app.use(urlencoded({ extended: true }));
 
 const corsOptions = {
   origin: [
-    "https://instagram-clone-blond-two.vercel.app",
-    "http://instagram-clone-blond-two.vercel.app",
-    "https://instagram-clone-eptf.onrender.com"
+    "http://localhost:5173",
+    "http://localhost:8000"
   ],
   credentials: true
 };
@@ -28,7 +27,7 @@ app.use(cors(corsOptions));
 
 app.use("/api/v2/user", router);
 app.use("/api/v2/post", postRoute);
-app.use("/api/v2/message", messageRoute);
+app.use("/api/v2/messages", messageRoute);
 
 server.listen(PORT, () => {
   connectDB();

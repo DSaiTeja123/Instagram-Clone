@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
-import useFetchMessages from '@/hooks/useFetchMessages';
-import useFetchNotification from '@/hooks/useFetchNotification';
+import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import useFetchMessages from "@/hooks/useFetchMessages";
+import useFetchNotification from "@/hooks/useFetchNotification";
 
 const Messages = ({ selectedUser }) => {
   useFetchNotification();
@@ -30,7 +30,7 @@ const Messages = ({ selectedUser }) => {
 
   useEffect(() => {
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
 
@@ -45,20 +45,18 @@ const Messages = ({ selectedUser }) => {
           <div
             key={message._id}
             className={`flex ${
-              message.senderId === user?._id
-                ? 'justify-end'
-                : 'justify-start'
+              message.senderId === user?._id ? "justify-end" : "justify-start"
             }`}
           >
             <div
               className={`p-2 rounded-xl max-w-xs break-words transition-colors duration-500 ${
                 message.senderId === user?._id
                   ? colorToggled
-                    ? 'rounded-tr-none bg-gray-500 text-white'
-                    : 'rounded-tr-none bg-indigo-100 text-black'
+                    ? "rounded-tr-none bg-gray-500 text-white"
+                    : "rounded-tr-none bg-indigo-100 text-black"
                   : colorToggled
-                  ? 'rounded-tl-none bg-gray-700 text-white'
-                  : 'rounded-tl-none bg-blue-400 text-white'
+                  ? "rounded-tl-none bg-gray-700 text-white"
+                  : "rounded-tl-none bg-blue-400 text-white"
               }`}
             >
               {message.message}
@@ -67,7 +65,9 @@ const Messages = ({ selectedUser }) => {
         ))}
       </div>
       <div ref={messagesEndRef} />
-      {loading && <div className="text-center mt-4">Loading older messages...</div>}
+      {loading && (
+        <div className="text-center mt-4">Loading older messages...</div>
+      )}
     </div>
   );
 };

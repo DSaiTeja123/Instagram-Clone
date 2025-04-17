@@ -42,7 +42,7 @@ const CreatePost = ({ open, setOpen }) => {
     try {
       setLoading(true);
       const res = await axios.post(
-        "https://instagram-clone-eptf.onrender.com/api/v2/post/createPost",
+        "http://localhost:8000/api/v2/post/createPost",
         data,
         {
           headers: {

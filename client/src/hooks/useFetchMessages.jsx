@@ -11,7 +11,7 @@ const useFetchMessages = () => {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const res = await axios.get(`https://instagram-clone-eptf.onrender.com/api/v2/message/receive/${selectedUser?._id}`, { withCredentials: true });
+        const res = await axios.get(`http://localhost:8000/api/v2/message/receive/${selectedUser?._id}`, { withCredentials: true });
         if (res?.data?.success) {
           dispatch(setMessages(res?.data?.messages));
         }

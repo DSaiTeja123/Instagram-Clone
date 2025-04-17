@@ -13,8 +13,7 @@ const authSlice = createSlice({
   },
   reducers: {
     setAuthUser:(state, action) => {
-      state.user = action.payload.user;
-      state.token = action.payload.token;
+      state.user = action.payload;
     },
     setSuggestedUsers: (state, action) => {
       state.suggestedUsers = action.payload;
@@ -25,15 +24,15 @@ const authSlice = createSlice({
     setSelectedUser: (state, action) => {
       state.selectedUser = action.payload;
     },
-    setFollowState: (state, action) => {
-      const userId = action.payload.userId;
-      state.followState[userId] = !state.followState[userId];
-    },
+    // setFollowState: (state, action) => {
+    //   const userId = action.payload.userId;
+    //   state.followState[userId] = !state.followState[userId];
+    // },
     setColorToggled: (state, action) => {
       state.colorToggled = action.payload;
     },
   }
 });
 
-export const { setAuthUser, setSuggestedUsers, setUserProfile, setSelectedUser, setFollowState, setColorToggled } = authSlice.actions;
+export const { setAuthUser, setSuggestedUsers, setUserProfile, setSelectedUser, setColorToggled } = authSlice.actions;
 export default authSlice.reducer;

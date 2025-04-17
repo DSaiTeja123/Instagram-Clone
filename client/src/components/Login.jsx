@@ -29,20 +29,21 @@ const Login = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.post('https://instagram-clone-eptf.onrender.com/api/v2/user/signin', input, {
+      const res = await axios.post('http://localhost:8000/api/v2/user/signin', input, {
         headers: {
           'Content-Type': 'application/json',
         },
         withCredentials:true
       });
       if(res.data.success) {
+        console.log("Login response:", res.data);
         dispatch(setAuthUser(res.data.user));
         navigate('/');
         toast.success(res.data?.message || "Login successful!");
         setInput({
           email: "",
           password: ""
-        })
+        });
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "An unexpected error occurred");
@@ -55,7 +56,7 @@ const Login = () => {
     if (!user) {
       navigate('/signin');
     }
-  }, [])
+  }, []); 
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-[#405DE6] via-[#833AB4] to-[#E1306C] p-6">
