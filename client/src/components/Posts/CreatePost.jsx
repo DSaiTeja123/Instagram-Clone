@@ -41,11 +41,6 @@ const CreatePost = ({ open, setOpen }) => {
   const createPostHandler = async (e) => {
     e.preventDefault();
 
-    if (!user?.token) {
-      toast.error("Unauthorized: No token found");
-      return;
-    }
-
     const data = new FormData();
     data.append("caption", caption);
     if (imagePreview) data.append("image", file);
@@ -53,10 +48,6 @@ const CreatePost = ({ open, setOpen }) => {
     try {
       setLoading(true);
       const res = await axios.post(`${baseURL}/api/v2/post/createPost`, data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${user.token}`,
-        },
         withCredentials: true,
       });
 

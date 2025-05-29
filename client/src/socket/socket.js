@@ -1,27 +1,21 @@
-import { io } from 'socket.io-client';
+import { io } from "socket.io-client";
 
-let socket;
-
-const baseURL = import.meta.env.VITE_SERVER_URL;
+let socket = null;
 
 export const initiateSocket = (userId) => {
   if (!socket || !socket.connected) {
-    socket = io(`${baseURL}`, {
+    socket = io(import.meta.env.VITE_SERVER_URL, {
       query: { userId },
-      transports: ['websocket'],
-      withCredentials: true,
+      transports: ["websocket"],
     });
-    console.log("🔌 Socket connected");
   }
   return socket;
 };
 
 export const getSocket = () => socket;
-
 export const closeSocket = () => {
   if (socket) {
     socket.disconnect();
     socket = null;
-    console.log("❌ Socket disconnected");
   }
 };

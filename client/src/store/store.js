@@ -20,6 +20,7 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage,
+  blacklist: ['socketio'],
 }
 
 const rootReducer = combineReducers({
@@ -36,9 +37,7 @@ const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
+      serializableCheck: false,
     }),
 })
 
