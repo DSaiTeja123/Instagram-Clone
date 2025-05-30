@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { LeftSidebar } from "../index";
 import { useSelector } from "react-redux";
 
 function MainLayout() {
   const { user, colorToggled } = useSelector((store) => store.auth);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!user) {

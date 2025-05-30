@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { Posts } from "../index";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function Feed() {
   const { user, colorToggled } = useSelector((store) => store.auth);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!user) {
