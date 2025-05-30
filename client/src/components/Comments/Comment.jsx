@@ -3,14 +3,14 @@ import { Avatar, AvatarImage, AvatarFallback } from '../ui/index'
 import { useSelector } from 'react-redux'
 
 function Comment({ comment }) {
-  const { colorToggled } = useSelector((store) => store.auth);
+  const { user, colorToggled } = useSelector((store) => store.auth);
 
   return (
     <div className={`my-2 transition-colors duration-500 ${colorToggled ? 'text-white' : 'text-black'}`}>
       <div className='flex gap-3 items-center'>
         <Avatar>
           <AvatarImage src={comment?.author?.profilePicture} />
-          <AvatarFallback>A</AvatarFallback>
+          <AvatarFallback>{user?.username?.charAt(0).toUpperCase()}</AvatarFallback>
         </Avatar>
         <h1 className={`font-bold text-sm ${colorToggled ? 'text-gray-300' : 'text-black'}`}>
           {comment?.author?.username} 

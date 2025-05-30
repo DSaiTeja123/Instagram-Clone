@@ -24,8 +24,7 @@ const browserRouter = createBrowserRouter([
     path: "/",
     element: (
       <ProtectedRoutes>
-        {" "}
-        <MainLayout />{" "}
+        <MainLayout />
       </ProtectedRoutes>
     ),
     children: [
@@ -33,8 +32,7 @@ const browserRouter = createBrowserRouter([
         path: "/",
         element: (
           <ProtectedRoutes>
-            {" "}
-            <Home />{" "}
+            <Home />
           </ProtectedRoutes>
         ),
       },
@@ -42,8 +40,7 @@ const browserRouter = createBrowserRouter([
         path: "/profile/:id",
         element: (
           <ProtectedRoutes>
-            {" "}
-            <Profile />{" "}
+            <Profile />
           </ProtectedRoutes>
         ),
       },
@@ -51,8 +48,7 @@ const browserRouter = createBrowserRouter([
         path: "/profile/update",
         element: (
           <ProtectedRoutes>
-            {" "}
-            <EditProfile />{" "}
+            <EditProfile />
           </ProtectedRoutes>
         ),
       },
@@ -60,8 +56,7 @@ const browserRouter = createBrowserRouter([
         path: "/chat",
         element: (
           <ProtectedRoutes>
-            {" "}
-            <Chat />{" "}
+            <Chat />
           </ProtectedRoutes>
         ),
       },
@@ -69,8 +64,7 @@ const browserRouter = createBrowserRouter([
         path: "/follow/:id",
         element: (
           <ProtectedRoutes>
-            {" "}
-            <Follow />{" "}
+            <Follow />
           </ProtectedRoutes>
         ),
       }

@@ -29,7 +29,6 @@ const Profile = () => {
   );
 
   const loggedInUser = user?._id === userProfile?._id;
-  // This is just for initial state; FollowButton will update it
   const isFollowing = userProfile?.followers?.includes(user?._id);
   const displayPost =
     active === "posts" ? userProfile?.posts : userProfile?.bookmarks;
@@ -47,7 +46,6 @@ const Profile = () => {
     setIsDialogOpen(true);
   };
 
-  // Callback to update followers in Redux after follow/unfollow
   const handleFollowToggle = (newIsFollowed) => {
     let updatedFollowers;
     if (newIsFollowed) {
@@ -77,7 +75,7 @@ const Profile = () => {
                 src={userProfile?.profilePicture}
                 alt="profilePhoto"
               />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarFallback>{user?.username?.charAt(0).toUpperCase()}</AvatarFallback>
             </Avatar>
           </section>
           <section>

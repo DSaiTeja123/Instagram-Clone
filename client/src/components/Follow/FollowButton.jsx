@@ -1,4 +1,3 @@
-// src/components/FollowButton.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";

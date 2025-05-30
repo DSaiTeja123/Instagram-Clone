@@ -11,7 +11,7 @@ import { setPosts } from '@/store/postSlice'
 const CommentDialog = ({ open, setOpen }) => {
   const [text, setText] = useState('');
   const { selectedPost, posts } = useSelector(store => store.post);
-  const { colorToggled } = useSelector(store => store.auth);
+  const { user, colorToggled } = useSelector(store => store.auth);
   const [comment, setComment] = useState([]);
   const dispatch = useDispatch();
 
@@ -69,7 +69,7 @@ const CommentDialog = ({ open, setOpen }) => {
                 <Link className="flex items-center gap-2">
                   <Avatar>
                     <AvatarImage src={selectedPost?.author?.profilePicture} />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarFallback>{user?.username?.charAt(0).toUpperCase()}</AvatarFallback>
                   </Avatar>
                   <div className={`${colorToggled ? 'text-white' : 'text-black'}`}>
                     <p className="font-semibold text-sm">{selectedPost?.author?.username}</p>

@@ -51,10 +51,8 @@ const Post = ({ post }) => {
 
   const baseURL = import.meta.env.VITE_SERVER_URL;
 
-  // Update isFollowingAuthor and user.following in Redux after follow/unfollow
   const handleFollowToggle = (newIsFollowed) => {
     setIsFollowingAuthor(newIsFollowed);
-    // Update user.following in Redux (if your app expects it)
     const updatedUser = {
       ...user,
       following: newIsFollowed
@@ -177,7 +175,7 @@ const Post = ({ post }) => {
                 alt="post_image"
                 className="w-12 h-12"
               />
-              <AvatarFallback className="text-lg">A</AvatarFallback>
+              <AvatarFallback className="text-lg">{user?.username?.charAt(0).toUpperCase()}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
               <h1 className="font-semibold text-lg">

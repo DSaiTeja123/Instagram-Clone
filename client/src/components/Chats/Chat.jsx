@@ -82,7 +82,7 @@ function Chat() {
               >
                 <Avatar className="w-12 h-12 md:w-16 md:h-16">
                   <AvatarImage src={suggestedUser?.profilePicture} />
-                  <AvatarFallback>A</AvatarFallback>
+                  <AvatarFallback>{user?.username?.charAt(0).toUpperCase()}</AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col">
                   <span
@@ -140,7 +140,7 @@ function Chat() {
                   alt="profile"
                   className="w-12 h-12 rounded-full"
                 />
-                <AvatarFallback>A</AvatarFallback>
+                <AvatarFallback>{user?.username?.charAt(0).toUpperCase()}</AvatarFallback>
               </Avatar>
             </Link>
             <div className="flex flex-col">

@@ -24,7 +24,7 @@ function SuggestedUsers() {
             <Link to={`/profile/${user?._id}`}>
               <Avatar>
                 <AvatarImage src={user?.profilePicture} alt="post_image" />
-                <AvatarFallback>A</AvatarFallback>
+                <AvatarFallback>{user?.username?.charAt(0).toUpperCase()}</AvatarFallback>
               </Avatar>
             </Link>
             <div>

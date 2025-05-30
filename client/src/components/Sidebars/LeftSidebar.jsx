@@ -106,7 +106,7 @@ const LeftSidebar = () => {
             src={user?.profilePicture}
             className="w-7 h-7 rounded-full"
           />
-          <AvatarFallback className="rounded-full">A</AvatarFallback>
+          <AvatarFallback className="rounded-full">{user?.username?.charAt(0).toUpperCase()}</AvatarFallback>
         </Avatar>
       ),
       text: "Profile",
@@ -184,7 +184,7 @@ const LeftSidebar = () => {
                               <AvatarImage
                                 src={n.userDetails?.profilePicture}
                               />
-                              <AvatarFallback>CN</AvatarFallback>
+                              <AvatarFallback>{user?.username?.charAt(0).toUpperCase()}</AvatarFallback>
                             </Avatar>
                             <p className="text-sm">
                               <span className="font-bold">
