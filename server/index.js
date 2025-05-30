@@ -19,7 +19,9 @@ app.use(urlencoded({ extended: true }));
 const corsOptions = {
   origin: [
     "http://localhost:5173",
-    "http://localhost:8000"
+    "http://localhost:8000",
+    "https://instagram-clone-five-eosin.vercel.app/",
+    "https://instagram-clone-3d9w.onrender.com"
   ],
   credentials: true
 };
