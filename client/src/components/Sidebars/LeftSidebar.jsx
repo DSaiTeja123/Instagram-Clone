@@ -44,7 +44,10 @@ const LeftSidebar = () => {
     } else {
       setIsSidebarCollapsed(false);
     }
-  }, [location.pathname]);
+    if (!user) {
+      navigate("/signin");
+    }
+  }, [location.pathname, user, navigate]);
 
   const logoutHandler = async () => {
     try {
@@ -59,6 +62,7 @@ const LeftSidebar = () => {
         toast.success("Logged out successfully");
       }
     } catch (error) {
+      navigate("/signin");
       toast.error(error.response.data.message);
     }
   };
