@@ -54,6 +54,9 @@ const Login = () => {
     if (!user) {
       navigate("/signin");
     }
+    if (user) {
+      navigate("/");
+    }
   }, []);
 
   return (

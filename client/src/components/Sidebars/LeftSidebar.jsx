@@ -62,8 +62,7 @@ const LeftSidebar = () => {
         toast.success("Logged out successfully");
       }
     } catch (error) {
-      navigate("/signin");
-      toast.error(error.response.data.message);
+      toast.error(error?.response?.data?.message);
     }
   };
 
