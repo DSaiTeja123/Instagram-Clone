@@ -1,11 +1,18 @@
 import React, { useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage, Badge, Button } from "../ui/index";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Badge,
+  Button,
+} from "../ui/index";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useFetchProfile } from "../../hooks/index";
 import { useSelector, useDispatch } from "react-redux";
 import { AtSign, Heart, MessageCircle } from "lucide-react";
 import { setUserProfile } from "@/store/authSlice";
 import { CommentDialog } from "../index";
+import { FollowButton } from "../index";
 
 const Profile = () => {
   const params = useParams();
@@ -22,6 +29,7 @@ const Profile = () => {
   );
 
   const loggedInUser = user?._id === userProfile?._id;
+  // This is just for initial state; FollowButton will update it
   const isFollowing = userProfile?.followers?.includes(user?._id);
   const displayPost =
     active === "posts" ? userProfile?.posts : userProfile?.bookmarks;
@@ -39,11 +47,14 @@ const Profile = () => {
     setIsDialogOpen(true);
   };
 
-  const handleFollow = () => {
-    const updatedFollowers = isFollowing
-      ? userProfile.followers.filter((id) => id !== user._id)
-      : [...userProfile.followers, user._id];
-
+  // Callback to update followers in Redux after follow/unfollow
+  const handleFollowToggle = (newIsFollowed) => {
+    let updatedFollowers;
+    if (newIsFollowed) {
+      updatedFollowers = [...userProfile.followers, user._id];
+    } else {
+      updatedFollowers = userProfile.followers.filter((id) => id !== user._id);
+    }
     dispatch(
       setUserProfile({
         ...userProfile,
@@ -106,41 +117,24 @@ const Profile = () => {
                   </>
                 ) : (
                   <>
-                    {isFollowing ? (
-                      <>
-                        <Button
-                          onClick={handleFollow}
-                          variant="secondary"
-                          className={`h-8 transition-all duration-500 ${
-                            colorToggled
-                              ? "hover:bg-gray-800 text-white"
-                              : "hover:bg-gray-200 text-black"
-                          }`}
-                        >
-                          Unfollow
-                        </Button>
-                        <Link to="/chat">
-                          <Button
-                            variant="secondary"
-                            className={`h-8 transition-all duration-500 ${
-                              colorToggled
-                                ? "hover:bg-gray-800 text-white"
-                                : "hover:bg-gray-200 text-black"
-                            }`}
-                            onClick={handleNavigateToMessages}
-                          >
-                            Message
-                          </Button>
-                        </Link>
-                      </>
-                    ) : (
+                    <FollowButton
+                      targetUserId={userProfile?._id}
+                      initialIsFollowed={isFollowing}
+                      onToggle={handleFollowToggle}
+                    />
+                    <Link to="/chat">
                       <Button
-                        onClick={handleFollow}
-                        className={`h-8 bg-[#0095F6] hover:bg-[#3192d2] text-white`}
+                        variant="secondary"
+                        className={`h-8 transition-all duration-500 ${
+                          colorToggled
+                            ? "hover:bg-gray-800 text-white"
+                            : "hover:bg-gray-200 text-black"
+                        }`}
+                        onClick={handleNavigateToMessages}
                       >
-                        Follow
+                        Message
                       </Button>
-                    )}
+                    </Link>
                   </>
                 )}
               </div>

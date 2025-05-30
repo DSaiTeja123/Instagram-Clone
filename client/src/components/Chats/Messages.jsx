@@ -1,6 +1,7 @@
+// ✅ CLEANED version of Messages.jsx
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { useFetchMessages, useFetchNotification } from '../../hooks/index'
+import { useFetchMessages, useFetchNotification } from "../../hooks/index";
 
 const Messages = ({ selectedUser }) => {
   useFetchNotification();
@@ -22,9 +23,7 @@ const Messages = ({ selectedUser }) => {
   };
 
   const loadOlderMessages = () => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+    setTimeout(() => setLoading(false), 1000); // simulate loading
   };
 
   useEffect(() => {

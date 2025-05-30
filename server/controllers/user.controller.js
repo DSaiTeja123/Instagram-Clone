@@ -238,11 +238,17 @@ export const followUnfollow = async (req, res) => {
     await user.save();
     await targetUser.save();
 
+    const updatedUser = await User.findById(currentUserId);
+    const updatedTargetUser = await User.findById(targetUserId);
+
     return res.status(200).json({
       message: isFollowing
         ? "Unfollowed successfully"
         : "Followed successfully",
       success: true,
+      isFollowing: !isFollowing,
+      followersCount: updatedTargetUser.followers.length,
+      followingCount: updatedUser.following.length,
     });
   } catch (error) {
     console.error("Error in follow/unfollow:", error);

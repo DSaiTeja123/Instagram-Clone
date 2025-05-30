@@ -9,7 +9,8 @@ import {
   EditProfile,
   MainLayout,
   ProtectedRoutes,
-} from "./components";
+  Follow,
+} from "./components/index";
 
 import { useSelector, useDispatch } from "react-redux";
 import { setSocket } from "./store/socketSlice";
@@ -64,6 +65,15 @@ const browserRouter = createBrowserRouter([
           </ProtectedRoutes>
         ),
       },
+      {
+        path: "/follow/:id",
+        element: (
+          <ProtectedRoutes>
+            {" "}
+            <Follow />{" "}
+          </ProtectedRoutes>
+        ),
+      }
     ],
   },
   {

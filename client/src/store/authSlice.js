@@ -8,12 +8,13 @@ const authSlice = createSlice({
     suggestedUsers: [],
     userProfile: null,
     selectedUser: null,
-    followState: {},
     colorToggled: false,
+    followings: [],
   },
   reducers: {
     setAuthUser:(state, action) => {
       state.user = action.payload;
+      state.followings = action.payload?.following || [];
     },
     setSuggestedUsers: (state, action) => {
       state.suggestedUsers = action.payload;
@@ -24,15 +25,21 @@ const authSlice = createSlice({
     setSelectedUser: (state, action) => {
       state.selectedUser = action.payload;
     },
-    // setFollowState: (state, action) => {
-    //   const userId = action.payload.userId;
-    //   state.followState[userId] = !state.followState[userId];
-    // },
     setColorToggled: (state, action) => {
       state.colorToggled = action.payload;
     },
+    followUser: (state, action) => {
+    const userId = action.payload;
+    if (!state.followings.includes(userId)) {
+      state.followings.push(userId);
+    }
+  },
+  unfollowUser: (state, action) => {
+    const userId = action.payload;
+    state.followings = state.followings.filter(id => id !== userId);
+  },
   }
 });
 
-export const { setAuthUser, setSuggestedUsers, setUserProfile, setSelectedUser, setColorToggled } = authSlice.actions;
+export const { setAuthUser, setSuggestedUsers, setUserProfile, setSelectedUser, setColorToggled, followUser, unfollowUser } = authSlice.actions;
 export default authSlice.reducer;

@@ -2,9 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/index';
 import { useSelector } from 'react-redux';
+import { FollowButton } from '../index';
 
 function SuggestedUsers() {
-  const { suggestedUsers, colorToggled } = useSelector((store) => store.auth);
+  const { user, suggestedUsers, colorToggled } = useSelector((store) => store.auth);
 
   return (
     <div className={`my-10 transition-colors duration-500 ${colorToggled ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
@@ -43,7 +44,7 @@ function SuggestedUsers() {
                 : 'bg-gradient-to-r from-[#405DE6] via-[#833AB4] to-[#E1306C] text-transparent bg-clip-text'
             }`}
           >
-            Follow
+            <FollowButton targetUserId={user?._id} initialIsFollowed={user?.isFollowed} />
           </span>
         </div>
       ))}
