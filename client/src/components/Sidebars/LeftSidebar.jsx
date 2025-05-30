@@ -121,9 +121,7 @@ const LeftSidebar = () => {
     >
       <div className="flex flex-col">
         <div className="flex items-center gap-3">
-          <div
-            className="text-3xl bg-gradient-to-r bg-clip-text text-[#833AB4] hover:text-[#E1306C] transition-all duration-500 pl-6 py-6 cursor-pointer"
-          >
+          <div className="text-3xl bg-gradient-to-r bg-clip-text text-[#833AB4] hover:text-[#E1306C] transition-all duration-500 pl-6 py-6 cursor-pointer">
             <FaInstagram className="block" />
           </div>
 
@@ -207,6 +205,16 @@ const LeftSidebar = () => {
         </div>
       </div>
       <CreatePost open={open} setOpen={setOpen} />
+      {!user && (
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+          <button
+            onClick={() => navigate("/signin")}
+            className="text-sm px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full shadow-md hover:scale-105 transition-transform"
+          >
+            Sign In
+          </button>
+        </div>
+      )}
     </div>
   );
 };
