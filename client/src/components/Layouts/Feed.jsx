@@ -3,7 +3,7 @@ import { Posts } from "../index";
 import { useSelector } from "react-redux";
 
 function Feed() {
-  const { colorToggled } = useSelector((store) => store.auth);
+  const { user, colorToggled } = useSelector((store) => store.auth);
 
   useEffect(() => {
     if (!user) {

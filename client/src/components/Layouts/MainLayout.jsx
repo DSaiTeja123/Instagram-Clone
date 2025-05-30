@@ -4,7 +4,7 @@ import { LeftSidebar } from "../index";
 import { useSelector } from "react-redux";
 
 function MainLayout() {
-  const { colorToggled } = useSelector((store) => store.auth);
+  const { user, colorToggled } = useSelector((store) => store.auth);
 
   useEffect(() => {
     if (!user) {
