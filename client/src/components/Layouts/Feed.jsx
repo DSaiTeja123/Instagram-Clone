@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Posts } from "../index";
 import { useSelector } from "react-redux";
 
