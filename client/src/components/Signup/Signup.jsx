@@ -62,7 +62,7 @@ const Signup = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-[#405DE6] via-[#833AB4] to-[#E1306C] p-6">
       <h1 className="text-5xl font-extrabold text-white mb-8 drop-shadow-lg">
-        Instagram
+        Connectify
       </h1>
       <form
         onSubmit={signupHandler}

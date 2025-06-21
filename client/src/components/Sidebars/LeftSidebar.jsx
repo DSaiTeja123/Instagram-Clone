@@ -124,13 +124,13 @@ const LeftSidebar = () => {
     >
       <div className="flex flex-col">
         <div className="flex items-center gap-3">
-          <div className="text-3xl bg-gradient-to-r bg-clip-text text-[#833AB4] hover:text-[#E1306C] transition-all duration-500 pl-6 py-6 cursor-pointer">
+          {/* <div className="text-3xl bg-gradient-to-r bg-clip-text text-[#833AB4] hover:text-[#E1306C] transition-all duration-500 pl-6 py-6 cursor-pointer">
             <FaInstagram className="block" />
-          </div>
+          </div> */}
 
           {!isSidebarCollapsed && location.pathname !== "/chat" && (
-            <h1 className="hidden md:block my-8 pb-2 text-4xl bg-gradient-to-r from-[#405DE6] via-[#833AB4] to-[#E1306C] bg-clip-text text-transparent font-extrabold drop-shadow-lg">
-              Instagram
+            <h1 className="pl-6 hidden md:block my-8 pb-2 text-4xl bg-gradient-to-r from-[#405DE6] via-[#833AB4] to-[#E1306C] bg-clip-text text-transparent font-extrabold drop-shadow-lg">
+              Connectify
             </h1>
           )}
         </div>
