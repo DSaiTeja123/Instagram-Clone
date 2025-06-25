@@ -33,22 +33,32 @@ A feature-rich Instagram-like social media application built with the **MERN Sta
 - cd expense-tracker
 
 2. **Install dependencies**
-***Install client dependencies***
-- cd client
-- npm install
 
-***Install server dependencies***
-- cd server
-- npm install
+**Install client dependencies**
+```bash
+cd client
+npm install
+```
+
+**Install server dependencies**
+```bash
+cd server
+npm install
+```
 
 3. **Start the development server**
-***Terminal 1 - start backend***
-- cd server
-- npm run dev
 
-***Terminal 2 - start frontend***
-- cd client
-- npm run dev
+**Terminal 1 - start backend**
+```bash
+cd server
+npm run dev
+```
+
+**Terminal 2 - start frontend**
+```bash
+cd client
+npm run dev
+```
 
 4. **Open in your browser:**  
 [http://localhost:5173](http://localhost:5173)
