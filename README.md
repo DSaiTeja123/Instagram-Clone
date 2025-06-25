@@ -1,4 +1,4 @@
-# Chattify
+# Connectify
 
 A feature-rich Instagram-like social media application built with the **MERN Stack** and styled using **Tailwind CSS**.  
 **Authenticated users** can create posts, like, comment, bookmark, follow/unfollow users, chat in real-time, and receive notifications for interactions — all within a dark/light themed, responsive UI.
@@ -67,7 +67,7 @@ npm run dev
 
 ## 🛠️ Usage
 
-- **Register/Login** to access Chattify.
+- **Register/Login** to access Connectify.
 - **Create posts** with optional captions and images.
 - **Like, comment, and bookmark** other users' posts.
 - **Follow/unfollow** users and view their profiles.
