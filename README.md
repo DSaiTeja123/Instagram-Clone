@@ -7,7 +7,7 @@ A feature-rich Instagram-like social media application built with the **MERN Sta
 
 ## ✨ Features
 
-- **User Authentication** (Register, Login with Email or Google)
+- **User Authentication** (Register, Login with Email)
 - **Create, Edit, and Delete Posts** with image support
 - **Like, Comment, and Bookmark** posts
 - **Follow/Unfollow** other users
