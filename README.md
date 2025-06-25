@@ -33,7 +33,7 @@ A feature-rich Instagram-like social media application built with the **MERN Sta
 - cd expense-tracker
 
 2. **Install dependencies**
-# Install client dependencies
+***Install client dependencies***
 - cd client
 - npm install
 
