@@ -37,16 +37,16 @@ A feature-rich Instagram-like social media application built with the **MERN Sta
 - cd client
 - npm install
 
-# Install server dependencies
+***Install server dependencies***
 - cd server
 - npm install
 
 3. **Start the development server**
-# Terminal 1 - start backend
+***Terminal 1 - start backend***
 - cd server
 - npm run dev
 
-# Terminal 2 - start frontend
+***Terminal 2 - start frontend***
 - cd client
 - npm run dev
 
